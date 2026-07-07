@@ -1,0 +1,117 @@
+/* Merlin Page Styles — embeds the ESP-AI Gradio assistant in an iframe. */
+.merlin-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px); /* Adjust based on header/nav/footer height */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.esp-ai-embed {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Banner across the top of the assistant window: an avatar on each side. */
+.esp-ai-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    border-bottom: 1px solid #eee;
+}
+
+.esp-ai-banner-img {
+    height: 64px;
+    width: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ecf0f1;
+    flex: 0 0 auto;
+}
+
+.esp-ai-banner-title {
+    color: #ecf0f1;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Holds the iframe + loading/error overlay; fills the space under the banner. */
+.esp-ai-frame-wrap {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+#esp-ai-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    /* Hidden until it reports loaded, so the notice shows through first. */
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+#esp-ai-frame.loaded {
+    opacity: 1;
+}
+
+/* Overlay shown while connecting / if ESP-AI isn't reachable. */
+.esp-ai-notice {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 30px;
+    text-align: center;
+    color: #666;
+    background-color: #fcfcfc;
+}
+
+.esp-ai-notice p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.esp-ai-notice .esp-ai-hint {
+    font-size: 0.9rem;
+    color: #888;
+    max-width: 480px;
+    line-height: 1.5;
+}
+
+.esp-ai-notice code {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    background-color: rgba(44, 62, 80, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.esp-ai-notice a {
+    color: #2980b9;
+}
+
+.esp-ai-notice-error {
+    color: #c0392b;
+}
+
+.esp-ai-notice-error p:first-child {
+    font-weight: bold;
+}

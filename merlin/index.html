@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DAWGIE UI: ESP-AI Merlin</title>
+    <link rel="icon" href="/assets/custom/favicon.ico">
+    <link rel="stylesheet" href="../assets/common.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="../assets/common.js" defer></script>
+    <script src="index.js" defer></script>
+</head>
+<body>
+    <header>
+        <img src="../assets/custom/logo.png" alt="DAWGIE Logo" class="logo">
+        <h1>DAWGIE UI: Merlin</h1>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="../about/index.html">About</a>
+        <a href="../logs/index.html">Logs</a>
+        <a href="../database/index.html">Database</a>
+        <a href="../df_model/index.html">Data Flow Model</a>
+        <a href="../command/index.html">Command</a>
+        <a href="../state/index.html">State</a>
+        <a href="../schedule/index.html">Schedule</a>
+        <a href="index.html">Merlin</a>
+    </nav>
+    <main class="merlin-content">
+        <div class="esp-ai-embed">
+            <!-- Banner shown above the assistant: one avatar on each side. -->
+            <div class="esp-ai-banner">
+                <img class="esp-ai-banner-img" src="GaelAI.png" alt="Gael AI">
+                <span class="esp-ai-banner-title">Merlin</span>
+                <img class="esp-ai-banner-img" src="LizAI.png" alt="Liz AI">
+            </div>
+            <div class="esp-ai-frame-wrap">
+                <!-- Shown until the ESP-AI Gradio app reports it has loaded, or if it fails to load. -->
+                <div id="esp-ai-notice" class="esp-ai-notice">
+                    <p>Connecting to the ESP-AI Merlin assistant&hellip;</p>
+                    <p class="esp-ai-hint">
+                        If this doesn't load, start ESP-AI
+                        (<a href="https://github.com/nasa-jpl-exoplanet/ESP-AI" target="_blank" rel="noopener">nasa-jpl-exoplanet/ESP-AI</a>)
+                        and make sure it is reachable at <code id="esp-ai-url-hint"></code>.
+                    </p>
+                </div>
+                <iframe id="esp-ai-frame" title="ESP-AI Merlin Assistant" allow="clipboard-write"></iframe>
+            </div>
+        </div>
+    </main>
+    <footer>&copy; 2023 DAWGIE-UI Project</footer>
+</body>
+</html>
