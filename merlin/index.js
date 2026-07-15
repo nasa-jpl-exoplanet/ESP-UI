@@ -1,6 +1,6 @@
 // The Merlin tab connects to the ESP-AI assistant via its REST API.
 // https://github.com/nasa-jpl-exoplanet/ESP-AI
-const ESP_AI_URL = 'https://mentor0.jpl.nasa.gov:10443';
+let ESP_AI_URL = 'https://excalibur.jpl.nasa.gov:10443'; // Default fallback
 
 document.addEventListener('DOMContentLoaded', () => {
     const notice = document.getElementById('esp-ai-notice');
@@ -13,8 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let history = []; // Stores [user, bot] pairs for the API
 
-    if (urlHint) urlHint.textContent = ESP_AI_URL;
-    if (docsLink) docsLink.href = `${ESP_AI_URL}/docs`;
+    function updateUrlHints() {
+        if (urlHint) urlHint.textContent = ESP_AI_URL;
+        if (docsLink) docsLink.href = `${ESP_AI_URL}/docs`;
+    }
+
+    updateUrlHints();
+
+    // Fetch actual target from proxy config if available
+    async function loadConfig() {
+        try {
+            const response = await fetch('/api/config');
+            if (response.ok) {
+                const config = await response.json();
+                if (config.merlinTarget) {
+                    ESP_AI_URL = config.merlinTarget;
+                    updateUrlHints();
+                }
+            }
+        } catch (e) {
+            console.warn("Could not fetch proxy config, using hardcoded default hint.");
+        }
+    }
 
     // Hide any banner avatar that fails to load (avoids a broken-image icon).
     document.querySelectorAll('.esp-ai-banner-img').forEach((img) => {
@@ -26,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function checkHealth() {
         try {
-            console.log("Checking ESP-AI health via proxy...");
-            const response = await fetch('/api/health');
+            console.log("Checking ESP-AI health...");
+            const response = await fetch(`${ESP_AI_URL}/api/health`);
             if (!response.ok) {
                 const errorText = await response.text().catch(() => "No error details available");
                 throw new Error(`HTTP ${response.status}: ${errorText.slice(0, 100)}`);
@@ -45,9 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error("Health check error:", err);
-            let detail = err.message;
-            if (detail === "Failed to fetch") {
-                detail = "Could not reach the local proxy. Please ensure you have run 'npm start' and the terminal shows '[Browsersync] Access URLs'.";
+            let detail = err.message || String(err);
+            if (detail && detail.includes("Failed to fetch")) {
+                detail = `Could not reach ${ESP_AI_URL}. Please ensure the ESP-AI service is running.`;
+                if (window.location.protocol === 'https:' && ESP_AI_URL.startsWith('http:')) {
+                    detail += " Note: Your browser (especially Safari) may block this request due to 'Mixed Content' rules (loading HTTP resources on an HTTPS site). Consider using an HTTPS endpoint for ESP-AI.";
+                }
             }
             showError(`Connectivity Error: ${detail}. (Target: ${ESP_AI_URL})`);
         }
@@ -95,23 +118,27 @@ document.addEventListener('DOMContentLoaded', () => {
      * Sends the current input to the /api/chat endpoint.
      */
     async function sendMessage() {
+        if (!chatInput) {
+            console.error('Chat input element missing; aborting sendMessage.');
+            return;
+        }
         const text = chatInput.value.trim();
         if (!text) return;
 
         // UI state: disable input while thinking
         chatInput.value = '';
         chatInput.disabled = true;
-        chatSendBtn.disabled = true;
+        if (chatSendBtn) chatSendBtn.disabled = true;
 
         addMessage('user', text);
 
         // Show thinking indicator
         const thinkingMsg = addMessage('bot', '...');
-        thinkingMsg.classList.add('thinking');
+        if (thinkingMsg && thinkingMsg.classList) thinkingMsg.classList.add('thinking');
 
         try {
-            // Using a relative path to leverage the proxy in proxy.config.js
-            const response = await fetch('/api/chat', {
+            // Calling the REST API directly using the configured target URL
+            const response = await fetch(`${ESP_AI_URL}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -121,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Remove thinking indicator
-            thinkingMsg.remove();
+            if (thinkingMsg && thinkingMsg.parentNode) thinkingMsg.remove();
 
             if (!response.ok) {
                 const errorText = await response.text().catch(() => "Unknown error");
@@ -142,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             // Remove thinking indicator if still there
-            if (thinkingMsg.parentNode) thinkingMsg.remove();
+            if (thinkingMsg && thinkingMsg.parentNode) thinkingMsg.remove();
             
             console.error("Chat error:", err);
             addMessage('bot', `Error: ${err.message}`, true);
@@ -167,5 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    checkHealth();
+    loadConfig().finally(() => {
+        checkHealth();
+    });
 });
