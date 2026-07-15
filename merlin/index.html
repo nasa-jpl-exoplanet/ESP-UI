@@ -6,6 +6,7 @@
     <link rel="icon" href="/assets/custom/favicon.ico">
     <link rel="stylesheet" href="../assets/common.css">
     <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked@17.0.6"></script>
     <script src="../assets/common.js" defer></script>
     <script src="index.js" defer></script>
 </head>
@@ -34,16 +35,25 @@
                 <img class="esp-ai-banner-img" src="LizAI.png" alt="Liz AI">
             </div>
             <div class="esp-ai-frame-wrap">
-                <!-- Shown until the ESP-AI Gradio app reports it has loaded, or if it fails to load. -->
+                <!-- Shown until connectivity to the REST API is confirmed. -->
                 <div id="esp-ai-notice" class="esp-ai-notice">
                     <p>Connecting to the ESP-AI Merlin assistant&hellip;</p>
                     <p class="esp-ai-hint">
                         If this doesn't load, start ESP-AI
                         (<a href="https://github.com/nasa-jpl-exoplanet/ESP-AI" target="_blank" rel="noopener">nasa-jpl-exoplanet/ESP-AI</a>)
-                        and make sure it is reachable at <code id="esp-ai-url-hint"></code>.
+                        and make sure the REST API is reachable at <code id="esp-ai-url-hint"></code>.
+                        See the <a id="esp-ai-docs-link" href="#" target="_blank" rel="noopener">API documentation</a> for details.
                     </p>
                 </div>
-                <iframe id="esp-ai-frame" title="ESP-AI Merlin Assistant" allow="clipboard-write"></iframe>
+                <div id="chat-container" class="chat-container">
+                    <div id="chat-history" class="chat-history">
+                        <!-- Messages will be injected here -->
+                    </div>
+                    <div class="chat-input-area">
+                        <textarea id="chat-input" placeholder="Type your message here..." rows="1"></textarea>
+                        <button id="chat-send-btn">Send</button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
