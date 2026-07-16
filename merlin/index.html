@@ -34,6 +34,10 @@
                 <span class="esp-ai-banner-title">Merlin</span>
                 <img class="esp-ai-banner-img" src="LizAI.png" alt="Liz AI">
             </div>
+            <div class="mode-toggle">
+                <button id="chat-mode-btn" class="mode-btn active">Chat</button>
+                <button id="query-mode-btn" class="mode-btn">Query</button>
+            </div>
             <div class="esp-ai-frame-wrap">
                 <!-- Shown until connectivity to the REST API is confirmed. -->
                 <div id="esp-ai-notice" class="esp-ai-notice">
@@ -52,6 +56,79 @@
                     <div class="chat-input-area">
                         <textarea id="chat-input" placeholder="Type your message here..." rows="1"></textarea>
                         <button id="chat-send-btn">Send</button>
+                    </div>
+                </div>
+                <div id="query-container" class="query-container">
+                    <div class="query-header">
+                        <h2>EXCALIBUR Data Query Assistant</h2>
+                        <p class="query-description">Ask questions in natural language to filter EXCALIBUR data. Example: 'All transit whitelight runs' or 'Show me eclipse observations for GJ 436'</p>
+                    </div>
+                    <div class="query-input-section">
+                        <div class="query-input-wrapper">
+                            <input type="text" id="query-input" placeholder="show all just runs" />
+                            <button id="query-search-btn">Search</button>
+                        </div>
+                    </div>
+                    <div class="query-results-info">
+                        <span id="results-count">Total: 0 results</span>
+                        <span id="results-showing">Showing 1-100</span>
+                    </div>
+                    <div class="table-container">
+                        <table id="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Run ID</th>
+                                    <th>Target</th>
+                                    <th>Task</th>
+                                    <th>Alg</th>
+                                    <th>SV</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-tbody">
+                                <!-- Results will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-controls">
+                        <button id="prev-btn" disabled>← Previous</button>
+                        <button id="next-btn" disabled>Next →</button>
+                    </div>
+                    <div class="example-queries">
+                        <h3>Example Queries</h3>
+                        <div class="example-query-buttons">
+                            <button class="example-query-btn">All transit whitelight runs</button>
+                            <button class="example-query-btn">Eclipse observations for GJ 436</button>
+                            <button class="example-query-btn">All spectrum runs</button>
+                            <button class="example-query-btn">Observations with HST-WFC3-IR-G141-SCAN1</button>
+                            <button class="example-query-btn">All JUST runs</button>
+                        </div>
+                    </div>
+                    <div class="faq-section">
+                        <h3>Frequently Asked Questions</h3>
+                        <div class="faq-item">
+                            <div class="faq-question">How do I query the data?</div>
+                            <div class="faq-answer">Type your question in natural language in the search box above. For example: "Show me all transit observations" or "Find runs for target GJ 436".</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">What can I search for?</div>
+                            <div class="faq-answer">You can search by target name, run type (transit, eclipse, spectrum), task type (data, timing), algorithm names, or specific instrument configurations.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">How do I use the chatbot mode?</div>
+                            <div class="faq-answer">Click the "Chat" button at the top to switch to chatbot mode. You can ask questions about EXCALIBUR data, request analysis, or get help understanding results. The bot maintains conversation context.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">What's the difference between Chat and Query modes?</div>
+                            <div class="faq-answer"><strong>Query mode</strong> returns structured table results for data exploration. <strong>Chat mode</strong> provides conversational responses, explanations, and can help with more complex questions or analysis tasks.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Can I combine multiple search criteria?</div>
+                            <div class="faq-answer">Yes! Try queries like "All JUST transit runs for GJ 436" or "Show eclipse observations using HST". The more specific you are, the better the results.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">How many results can I see at once?</div>
+                            <div class="faq-answer">Results are paginated at 100 per page. Use the Previous/Next buttons below the table to navigate through larger result sets.</div>
+                        </div>
                     </div>
                 </div>
             </div>
