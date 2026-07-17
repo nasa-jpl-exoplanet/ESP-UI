@@ -394,6 +394,7 @@
 
 .table-container {
     flex: 1;
+    min-height: 300px;
     overflow: auto;
     border: 1px solid #ddd;
     border-radius: 6px;
