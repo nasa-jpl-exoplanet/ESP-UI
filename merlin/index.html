@@ -28,15 +28,10 @@
     </nav>
     <main class="merlin-content">
         <div class="esp-ai-embed">
-            <!-- Banner shown above the assistant: one avatar on each side. -->
+            <!-- Banner shown above the assistant. -->
             <div class="esp-ai-banner">
-    <img class="esp-ai-banner-img" src="GaelAI.png" alt="Gael AI">
-    <span class="esp-ai-banner-title">Merlin</span>
-    <div class="esp-ai-banner-img" style="visibility: hidden;"></div>
-</div>
-            <div class="mode-toggle">
-                <button id="chat-mode-btn" class="mode-btn active">Chat</button>
-                <button id="query-mode-btn" class="mode-btn">Query</button>
+                <img class="esp-ai-banner-img" src="Merlin.png" alt="Merlin">
+                <span class="esp-ai-banner-title">Merlin</span>
             </div>
             <div class="mode-toggle">
                 <button id="chat-mode-btn" class="mode-btn active">Chat</button>
@@ -58,7 +53,7 @@
                         <!-- Messages will be injected here -->
                     </div>
                     <div class="chat-input-area">
-                        <textarea id="chat-input" placeholder="Type your message here..." rows="1"></textarea>
+                        <label for="chat-input"></label><textarea id="chat-input" placeholder="Type your message here..." rows="1"></textarea>
                         <button id="chat-send-btn">Send</button>
                     </div>
                 </div>
@@ -69,7 +64,7 @@
                     </div>
                     <div class="query-input-section">
                         <div class="query-input-wrapper">
-                            <input type="text" id="query-input" placeholder="show all JWST runs" />
+                            <label for="query-input"></label><input type="text" id="query-input" placeholder="show all JWST runs" />
                             <button id="query-search-btn">Search</button>
                         </div>
                     </div>
@@ -110,7 +105,7 @@
                         <h3>Frequently Asked Questions</h3>
                         <div class="faq-item">
                             <div class="faq-question">How do I query the data?</div>
-                            <div class="faq-answer">Type your question in natural language in the search box above. For example: "Show me all transit observations" or "Find runs for target GJ 436".</div>
+                            <div class="faq-answer">Type your question in natural language in the search box above. For example, "Show me all transit observations" or "Find runs for target GJ 436".</div>
                         </div>
                         <div class="faq-item">
                             <div class="faq-question">What can I search for?</div>
