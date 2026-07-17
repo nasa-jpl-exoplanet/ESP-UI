@@ -1,6 +1,7 @@
 // The Merlin tab connects to the ESP-AI assistant via its REST API.
 // https://github.com/nasa-jpl-exoplanet/ESP-AI
 let ESP_AI_URL = 'https://excalibur.jpl.nasa.gov:10443'; // Default fallback
+// let ESP_AI_URL = 'http://localhost:8000'; for testing locally
 
 document.addEventListener('DOMContentLoaded', () => {
     const notice = document.getElementById('esp-ai-notice');
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let history = []; // Stores [user, bot] pairs for the API
     let currentMode = 'chat';
     let queryResults = [];
+    let queryTotal = 0;
     let currentPage = 0;
     const resultsPerPage = 100;
 
@@ -245,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (data.status === 'success' || data.status === 'ok') {
                 queryResults = data.results || [];
+                queryTotal = data.total || queryResults.length; // use real total
                 currentPage = 0;
                 renderResults();
             } else {
@@ -293,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsTbody.appendChild(tr);
         });
 
-        resultsCount.textContent = `Total: ${queryResults.length} results`;
+        resultsCount.textContent = `Total: ${queryTotal} results`;
         resultsShowing.textContent = `Showing ${startIdx + 1}-${endIdx}`;
 
         prevBtn.disabled = currentPage === 0;

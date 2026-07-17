@@ -30,10 +30,10 @@
         <div class="esp-ai-embed">
             <!-- Banner shown above the assistant: one avatar on each side. -->
             <div class="esp-ai-banner">
-                <img class="esp-ai-banner-img" src="GaelAI.png" alt="Gael AI">
-                <span class="esp-ai-banner-title">Merlin</span>
-                <img class="esp-ai-banner-img" src="LizAI.png" alt="Liz AI">
-            </div>
+    <img class="esp-ai-banner-img" src="GaelAI.png" alt="Gael AI">
+    <span class="esp-ai-banner-title">Merlin</span>
+    <div class="esp-ai-banner-img" style="visibility: hidden;"></div>
+</div>
             <div class="mode-toggle">
                 <button id="chat-mode-btn" class="mode-btn active">Chat</button>
                 <button id="query-mode-btn" class="mode-btn">Query</button>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="query-input-section">
                         <div class="query-input-wrapper">
-                            <input type="text" id="query-input" placeholder="show all just runs" />
+                            <input type="text" id="query-input" placeholder="show all JWST runs" />
                             <button id="query-search-btn">Search</button>
                         </div>
                     </div>
@@ -99,8 +99,7 @@
                             <button class="example-query-btn">All transit whitelight runs</button>
                             <button class="example-query-btn">Eclipse observations for GJ 436</button>
                             <button class="example-query-btn">All spectrum runs</button>
-                            <button class="example-query-btn">Observations with HST-WFC3-IR-G141-SCAN1</button>
-                            <button class="example-query-btn">All JUST runs</button>
+                            <button class="example-query-btn">All JWST runs</button>
                         </div>
                     </div>
                     <div class="faq-section">
@@ -123,7 +122,7 @@
                         </div>
                         <div class="faq-item">
                             <div class="faq-question">Can I combine multiple search criteria?</div>
-                            <div class="faq-answer">Yes! Try queries like "All JUST transit runs for GJ 436" or "Show eclipse observations using HST". The more specific you are, the better the results.</div>
+                            <div class="faq-answer">Yes! Try queries like "All JWST transit runs for GJ 436" or "Show eclipse observations using HST". The more specific you are, the better the results.</div>
                         </div>
                         <div class="faq-item">
                             <div class="faq-question">How many results can I see at once?</div>
