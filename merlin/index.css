@@ -25,11 +25,11 @@
     box-shadow: none;
 }
 
-/* Banner across the top of the assistant window: an avatar on each side. */
+/* Banner across the top of the assistant window. */
 .esp-ai-banner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 16px;
     padding: 10px 20px;
     background-color: #2c3e50;
