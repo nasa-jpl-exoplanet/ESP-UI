@@ -5,7 +5,8 @@ const windowConfigs = {
     'scroll-doing': { endpoint: '/api/schedule/doing' },
     'scroll-to-do': { endpoint: '/api/schedule/to-do' },
     'scroll-succeeded': { endpoint: '/api/schedule/succeeded' },
-    'scroll-failed': { endpoint: '/api/schedule/failed' }
+    'scroll-failed': { endpoint: '/api/schedule/failed' },
+    'scroll-invalid': { endpoint: '/api/schedule/invalid' }
 };
 
 const windowStates = {};
@@ -25,11 +26,13 @@ function getPageSize(state) {
 }
 
 function isDoneWindow(state) {
-    return state.endpoint === '/api/schedule/succeeded' || state.endpoint === '/api/schedule/failed';
+    return state.endpoint === '/api/schedule/succeeded' || 
+           state.endpoint === '/api/schedule/failed' || 
+           state.endpoint === '/api/schedule/invalid';
 }
 
 async function resetDoneWindows() {
-    for (const id of ['scroll-succeeded', 'scroll-failed']) {
+    for (const id of ['scroll-succeeded', 'scroll-failed', 'scroll-invalid']) {
         const state = windowStates[id];
         if (state) {
             state.pageSize = getDonePageSize();
@@ -72,7 +75,9 @@ function formatItems(endpoint, items) {
         })) : [];
     }
 
-    if (endpoint === '/api/schedule/failed' || endpoint === '/api/schedule/succeeded') {
+    if (endpoint === '/api/schedule/failed' || 
+        endpoint === '/api/schedule/succeeded' || 
+        endpoint === '/api/schedule/invalid') {
         const list = Array.isArray(items) ? items : Object.values(items || {});
         return list.map((item) => {
             const titleParts = [item.runid, item.target, item.task].filter((value) => value !== null && value !== undefined && value !== '');
@@ -307,6 +312,24 @@ function setupDonePageSize() {
     selector.addEventListener('change', resetDoneWindows);
 }
 
+function setupInvalidToggle() {
+    const toggle = document.getElementById('show-invalid');
+    const win = document.getElementById('win-invalid');
+    if (!toggle || !win) return;
+
+    toggle.addEventListener('change', () => {
+        if (toggle.checked) {
+            win.style.display = 'flex';
+            const state = windowStates['scroll-invalid'];
+            if (state && state.items.length === 0) {
+                resetWindow(state);
+            }
+        } else {
+            win.style.display = 'none';
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     for (const [id, config] of Object.entries(windowConfigs)) {
         windowStates[id] = {
@@ -325,4 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     refreshAll();
     setupRefresh();
+    setupDonePageSize();
+    setupInvalidToggle();
 });
