@@ -71,6 +71,10 @@
                     <option value="160">160</option>
                     <option value="320">320</option>
                 </select>
+                <span style="margin-left: 20px;">
+                    <input type="checkbox" id="show-invalid">
+                    <label for="show-invalid">Show Invalid</label>
+                </span>
             </div>
             <div class="scroll-container">
                 <div class="scroll-window" id="win-succeeded">
@@ -80,6 +84,10 @@
                 <div class="scroll-window" id="win-failed">
                     <h3>Failed</h3>
                     <div class="virtual-scroll" id="scroll-failed"></div>
+                </div>
+                <div class="scroll-window" id="win-invalid" style="display: none;">
+                    <h3>Invalid</h3>
+                    <div class="virtual-scroll" id="scroll-invalid"></div>
                 </div>
             </div>
         </section>
