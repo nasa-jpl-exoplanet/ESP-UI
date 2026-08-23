@@ -83,6 +83,41 @@ function setupEventListeners() {
         if (result) alert('Command executed successfully');
     });
 
+    // Security Logic
+    const secCheckboxes = [
+        document.getElementById('sec-ca'),
+        document.getElementById('sec-guests'),
+        document.getElementById('sec-myself'),
+        document.getElementById('sec-server')
+    ];
+    const reloadBtn = document.getElementById('reload-btn');
+
+    const updateReloadButton = () => {
+        const anyChecked = secCheckboxes.some(cb => cb.checked);
+        reloadBtn.disabled = !anyChecked;
+    };
+
+    secCheckboxes.forEach(cb => cb.addEventListener('change', updateReloadButton));
+    updateReloadButton();
+
+    reloadBtn.addEventListener('click', async () => {
+        const pems = secCheckboxes.filter(cb => cb.checked).map(cb => cb.value).join(',');
+        const url = `/api/cmd/reload?pem=${pems}`;
+        const result = await apiFetch(url, { method: 'PUT' });
+        if (result) alert('Security reloaded successfully');
+    });
+
+    // Boot Hill Logic
+    const archiveCheckbox = document.getElementById('archive-checkbox');
+    const resetBtn = document.getElementById('reset-btn');
+
+    resetBtn.addEventListener('click', async () => {
+        const archive = archiveCheckbox.checked ? 'true' : 'false';
+        const url = `/api/cmd/reset?archive=${archive}`;
+        const result = await apiFetch(url, { method: 'PUT' });
+        if (result) alert('Reset executed successfully');
+    });
+
     // Filtering
     document.getElementById('target-include').addEventListener('input', filterTargets);
     document.getElementById('target-exclude').addEventListener('input', filterTargets);
