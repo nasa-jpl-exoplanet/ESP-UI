@@ -58,7 +58,7 @@ function setupEventListeners() {
             changeset: changesetInput.value,
             directive: document.getElementById('reload-directive').value
         };
-        const result = await apiFetch('/api/rev/submit', {
+        const result = await apiFetch('/api/cmd/submit', {
             method: 'POST',
             body: JSON.stringify(data)
         });
