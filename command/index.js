@@ -3,7 +3,7 @@ let allTargets = [];
 async function init() {
     // Fetch initial data
     const [currentRev, tasks, targets] = await Promise.all([
-        apiFetch('/api/rev/current'),
+        apiFetch('/api/cmd/revision'),
         apiFetch('/api/database/runnables'),
         apiFetch('/api/database/targets')
     ]);
