@@ -27,25 +27,50 @@
     </nav>
     <main class="command-main">
         <section class="revision-section">
-            <h2>Revision</h2>
-            <div class="current-rev">Current: <span id="current-rev-val">Loading...</span></div>
-            
-            <div class="form-group">
-                <label for="changeset">Changeset (hex):</label>
-                <input type="text" id="changeset" placeholder="e.g. a1b2c3d4">
+            <div class="command-sub-section">
+                <h2>Revision</h2>
+                <div class="current-rev">Current: <span id="current-rev-val">Loading...</span></div>
+                
+                <div class="form-group">
+                    <label for="changeset">Changeset (hex):</label>
+                    <input type="text" id="changeset" placeholder="e.g. a1b2c3d4">
+                </div>
+
+                <div class="form-group">
+                    <label for="reload-directive">Reload Directive:</label>
+                    <select id="reload-directive">
+                        <option value="todo" selected>To-Do Finishes</option>
+                        <option value="doing">Doing Finishes</option>
+                        <option value="crew">Crew Finishes</option>
+                        <option value="now">Now</option>
+                    </select>
+                </div>
+
+                <button id="rev-submit" disabled>Submit</button>
             </div>
 
-            <div class="form-group">
-                <label for="reload-directive">Reload Directive:</label>
-                <select id="reload-directive">
-                    <option value="todo" selected>To-Do Finishes</option>
-                    <option value="doing">Doing Finishes</option>
-                    <option value="crew">Crew Finishes</option>
-                    <option value="now">Now</option>
-                </select>
+            <hr>
+
+            <div class="command-sub-section">
+                <h2>Security</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" class="sec-checkbox" id="sec-ca" value="ca"> Certificate Authority</label>
+                    <label><input type="checkbox" class="sec-checkbox" id="sec-guests" value="guests" checked> Guests</label>
+                    <label><input type="checkbox" class="sec-checkbox" id="sec-myself" value="myself"> Myself</label>
+                    <label><input type="checkbox" class="sec-checkbox" id="sec-server" value="system"> Server</label>
+                </div>
+                <button id="reload-btn">Reload</button>
             </div>
 
-            <button id="rev-submit" disabled>Submit</button>
+            <hr>
+
+            <div class="command-sub-section">
+                <h2>Boot Hill</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="archive-checkbox" checked> Archive</label>
+                </div>
+                <button id="reset-btn">Reset</button>
+            </div>
         </section>
 
         <section class="commands-section">
