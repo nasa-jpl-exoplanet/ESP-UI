@@ -3,7 +3,7 @@ let allTargets = [];
 async function init() {
     // Fetch initial data
     const [currentRev, tasks, targets] = await Promise.all([
-        apiFetch('/api/rev/current'),
+        apiFetch('/api/cmd/revision'),
         apiFetch('/api/database/runnables'),
         apiFetch('/api/database/targets')
     ]);
@@ -58,7 +58,7 @@ function setupEventListeners() {
             changeset: changesetInput.value,
             directive: document.getElementById('reload-directive').value
         };
-        const result = await apiFetch('/api/rev/submit', {
+        const result = await apiFetch('/api/cmd/submit', {
             method: 'POST',
             body: JSON.stringify(data)
         });
